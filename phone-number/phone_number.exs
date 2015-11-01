@@ -18,7 +18,23 @@ defmodule Phone do
   """
   @spec number(String.t) :: String.t
   def number(raw) do
-
+    if raw =~ ~r/^(\d|\W)+$/ do
+      digits =
+        Regex.scan(~r/\d/, raw)
+        |> Enum.map(&hd/1)
+        |> Enum.join
+      cond do
+        byte_size(digits) == 10 -> digits
+        byte_size(digits) == 11 ->
+          case digits do
+            "1" <> rest -> rest
+            otherwise -> "0000000000"
+          end
+        true -> "0000000000"
+      end
+    else
+      "0000000000"
+    end
   end
 
   @doc """
@@ -40,7 +56,8 @@ defmodule Phone do
   """
   @spec area_code(String.t) :: String.t
   def area_code(raw) do
-  
+    <<a :: binary-size(3), _ :: binary>> = number(raw)
+    a
   end
 
   @doc """
@@ -62,6 +79,7 @@ defmodule Phone do
   """
   @spec pretty(String.t) :: String.t
   def pretty(raw) do
-  
+    <<a :: binary-size(3), b :: binary-size(3), c :: binary-size(4)>> = number(raw)
+    "(#{a}) #{b}-#{c}"
   end
 end
