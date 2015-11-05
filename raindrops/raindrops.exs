@@ -10,6 +10,18 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-
+    pling(number) <> plang(number) <> plong(number) <> otherwise(number)
   end
+
+  defp pling(number) when rem(number, 3) == 0, do: "Pling"
+  defp pling(_), do: ""
+
+  defp plang(number) when rem(number, 5) == 0, do: "Plang"
+  defp plang(_), do: ""
+
+  defp plong(number) when rem(number, 7) == 0, do: "Plong"
+  defp plong(_), do: ""
+
+  defp otherwise(number) when rem(number, 3) != 0 and rem(number, 5) != 0 and rem(number, 7) != 0, do: "#{number}"
+  defp otherwise(_), do: ""
 end
