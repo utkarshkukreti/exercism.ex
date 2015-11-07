@@ -5,7 +5,6 @@ else
 end
 
 ExUnit.start
-ExUnit.configure exclude: :pending
 
 # The BankAccount module should support four calls:
 #
@@ -32,19 +31,16 @@ defmodule BankAccountTest do
     { :ok, [ account: account ] }
   end
 
-  # @tag :pending
   test "initial balance is 0", context do
     assert BankAccount.balance(context[:account]) == 0
   end
 
-  @tag :pending
   test "incrementing and checking balance", context do
     assert BankAccount.balance(context[:account]) == 0
     BankAccount.update(context[:account], 10)
     assert BankAccount.balance(context[:account]) == 10
   end
 
-  @tag :pending
   test "incrementing balance from another process then checking it from test process", context do
     assert BankAccount.balance(context[:account]) == 0
     this = self()
