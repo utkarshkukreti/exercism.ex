@@ -4,16 +4,16 @@ defmodule Triplet do
   Calculates sum of a given triplet of integers.
   """
   @spec sum([non_neg_integer]) :: non_neg_integer
-  def sum(triplet) do
-
+  def sum([a, b, c]) do
+    a + b + c
   end
 
   @doc """
   Calculates product of a given triplet of integers.
   """
   @spec product([non_neg_integer]) :: non_neg_integer
-  def product(triplet) do
-
+  def product([a, b, c]) do
+    a * b * c
   end
 
   @doc """
@@ -21,7 +21,7 @@ defmodule Triplet do
   """
   @spec pythagorean?([non_neg_integer]) :: boolean
   def pythagorean?([a, b, c]) do
-
+    a * a + b * b == c * c
   end
 
   @doc """
@@ -29,7 +29,12 @@ defmodule Triplet do
   """
   @spec generate(non_neg_integer, non_neg_integer) :: [list(non_neg_integer)]
   def generate(min, max) do
-
+    for(a <- min..max,
+        b <- a..max,
+        c <- b..max,
+        pythagorean?([a, b, c])) do
+      [a, b, c]
+    end
   end
 
   @doc """
@@ -37,6 +42,12 @@ defmodule Triplet do
   """
   @spec generate(non_neg_integer, non_neg_integer, non_neg_integer) :: [list(non_neg_integer)]
   def generate(min, max, sum) do
-   
+    for(a <- min..max,
+        b <- a..max,
+        c <- b..max,
+        sum([a, b, c]) == sum,
+        pythagorean?([a, b, c])) do
+      [a, b, c]
+    end
   end
 end
